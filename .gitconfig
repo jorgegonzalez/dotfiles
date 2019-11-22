@@ -1,0 +1,6 @@
+[user]
+	name = Jorge Gonzalez
+	email = jorgegonzalez@users.noreply.github.com
+	signingkey = EA049EB45A333424
+[commit]
+	gpgsign = true
