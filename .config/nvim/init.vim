@@ -74,3 +74,6 @@ if has("autocmd")
 endif
 
 colorscheme snazzy
+
+set clipboard=unnamed
+
