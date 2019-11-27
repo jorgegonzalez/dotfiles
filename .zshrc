@@ -8,6 +8,7 @@ ZSH_THEME=""
 plugins=(
   brew
   git
+  tmux
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -36,6 +37,9 @@ alias lines='git ls-files | xargs wc -l'
 alias npmls='npm -g ls --depth=0'
 alias yup='yarn global upgrade --latest'
 alias vimconfig='nvim ~/.config/nvim/init.vim'
+alias tmuxconfig='nvim ~/.tmux.conf'
+alias l="exa -l"
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
