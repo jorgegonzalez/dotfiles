@@ -5,6 +5,7 @@ autoload -U promptinit; promptinit
 prompt pure
 
 ZSH_THEME=""
+DISABLE_MAGIC_FUNCTIONS=true 
 plugins=(
   brew
   git
@@ -37,11 +38,17 @@ alias npmls='npm -g ls --depth=0'
 alias yup='yarn global upgrade --latest'
 alias vimconfig='nvim ~/.config/nvim/init.vim'
 alias tmuxconfig='nvim ~/.tmux.conf'
-alias l="exa -l"
+alias l="exa -al"
 
+# Ruby
+eval "$(rbenv init -)"
 
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias dotfiles='/usr/bin/git --git-dir=/Users/jorge/.myconf/ --work-tree=/Users/jorge'
+
+# opam configuration
+test -r /Users/jorge/.opam/opam-init/init.zsh && . /Users/jorge/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
