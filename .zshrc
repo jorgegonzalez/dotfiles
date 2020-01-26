@@ -1,11 +1,13 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export ZSH="/Users/jorge/.oh-my-zsh"
 
-autoload -U promptinit; promptinit
-prompt pure
+# autoload -U promptinit; promptinit
+# prompt pure
 
-ZSH_THEME=""
+ZSH_THEME="spaceship"
+
 DISABLE_MAGIC_FUNCTIONS=true 
+
 plugins=(
   brew
   git
@@ -40,9 +42,6 @@ alias vimconfig='nvim ~/.config/nvim/init.vim'
 alias tmuxconfig='nvim ~/.tmux.conf'
 alias l="exa -al"
 
-# Ruby
-eval "$(rbenv init -)"
-
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -52,3 +51,6 @@ alias dotfiles='/usr/bin/git --git-dir=/Users/jorge/.myconf/ --work-tree=/Users/
 
 # opam configuration
 test -r /Users/jorge/.opam/opam-init/init.zsh && . /Users/jorge/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# rbenv
+eval "$(rbenv init -)"
