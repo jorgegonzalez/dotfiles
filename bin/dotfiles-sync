@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DOTFILES_REPO="$HOME/code/dotfiles"
+
+# Files to sync: source -> destination (relative to repo root)
+declare -A FILES=(
+  ["$HOME/.zshrc"]=".zshrc"
+  ["$HOME/.oh-my-zsh/custom/themes/claude.zsh-theme"]=".oh-my-zsh/themes/claude.zsh-theme"
+)
+
+if [[ ! -d "$DOTFILES_REPO/.git" ]]; then
+  echo "Error: dotfiles repo not found at $DOTFILES_REPO"
+  exit 1
+fi
+
+echo "Syncing dotfiles..."
+
+for src in "${!FILES[@]}"; do
+  dest="$DOTFILES_REPO/${FILES[$src]}"
+  if [[ -f "$src" ]]; then
+    mkdir -p "$(dirname "$dest")"
+    cp "$src" "$dest"
+    echo "  ✓ ${FILES[$src]}"
+  else
+    echo "  ✗ $src not found, skipping"
+  fi
+done
+
+# Strip sensitive lines from .zshrc copy
+sed -i '' '/^export PGPASSWORD=/d' "$DOTFILES_REPO/.zshrc"
+
+cd "$DOTFILES_REPO"
+
+if git diff --quiet && git diff --cached --quiet; then
+  echo "No changes to commit."
+  exit 0
+fi
+
+echo ""
+echo "Changes:"
+git diff --stat
+
+echo ""
+read -rp "Commit and push? [y/N] " confirm
+if [[ "$confirm" =~ ^[Yy]$ ]]; then
+  git add -A
+  git commit -m "sync dotfiles $(date +%Y-%m-%d)"
+  git push
+  echo "Done! Pushed to remote."
+else
+  echo "Aborted. Changes are staged in $DOTFILES_REPO"
+fi
