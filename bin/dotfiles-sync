@@ -2,11 +2,20 @@
 set -euo pipefail
 
 DOTFILES_REPO="$HOME/code/dotfiles"
+SUBLIME_SRC="$HOME/Library/Application Support/Sublime Text/Packages/User"
+SUBLIME_DEST="$DOTFILES_REPO/sublime"
 
 # Files to sync: source -> destination (relative to repo root)
 declare -A FILES=(
   ["$HOME/.zshrc"]=".zshrc"
   ["$HOME/.oh-my-zsh/custom/themes/claude.zsh-theme"]=".oh-my-zsh/themes/claude.zsh-theme"
+)
+
+# Sublime Text settings to sync (from Packages/User/)
+SUBLIME_FILES=(
+  "Preferences.sublime-settings"
+  "Package Control.sublime-settings"
+  "Markdown.sublime-settings"
 )
 
 if [[ ! -d "$DOTFILES_REPO/.git" ]]; then
@@ -26,6 +35,23 @@ for src in "${!FILES[@]}"; do
     echo "  ✗ $src not found, skipping"
   fi
 done
+
+# Sync Sublime Text settings
+echo ""
+echo "Syncing Sublime Text settings..."
+if [[ -d "$SUBLIME_SRC" ]]; then
+  mkdir -p "$SUBLIME_DEST"
+  for file in "${SUBLIME_FILES[@]}"; do
+    if [[ -f "$SUBLIME_SRC/$file" ]]; then
+      cp "$SUBLIME_SRC/$file" "$SUBLIME_DEST/$file"
+      echo "  ✓ sublime/$file"
+    else
+      echo "  ✗ $file not found, skipping"
+    fi
+  done
+else
+  echo "  ✗ Sublime Text User directory not found, skipping"
+fi
 
 # Strip sensitive lines from .zshrc copy
 sed -i '' '/^export PGPASSWORD=/d' "$DOTFILES_REPO/.zshrc"

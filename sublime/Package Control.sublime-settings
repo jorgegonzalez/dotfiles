@@ -1,0 +1,20 @@
+{
+	"bootstrapped": true,
+	"installed_packages":
+	[
+		"1337 Color Scheme",
+		"A File Icon",
+		"ColorHelper",
+		"Dracula Color Scheme",
+		"GitGutter",
+		"LSP",
+		"LSP-eslint",
+		"MarkdownEditing",
+		"Package Control",
+		"SideBarEnhancements",
+		"Solarized Color Scheme",
+	],
+	"in_process_packages":
+	[
+	],
+}
